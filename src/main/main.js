@@ -4,13 +4,13 @@ import html from "./index.html";
 const templateRenderer = template(html);
 
 
-class Header {
+class Main {
   constructor() {
-    this.header = document.querySelector("header");
+    this.main = document.querySelector("#content");
   }
 
   render() {
-    const layout = templateRenderer(this.header);
+    const layout = templateRenderer(this.main);
 
     const container = document.createElement("div");
     container.innerHTML = layout;
@@ -18,4 +18,4 @@ class Header {
   }
 }
 
-export default Header;
+export default Main;
