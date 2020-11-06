@@ -1,4 +1,5 @@
 import "./style.css";
+import "./films/style.css";
 
 import Header from "./header/header";
 const header = new Header();
@@ -11,3 +12,7 @@ main.render();
 import List from "./films/films";
 const films = new List();
 films.render();
+
+import Footer from "./footer/footer";
+const footer = new Footer();
+footer.render();

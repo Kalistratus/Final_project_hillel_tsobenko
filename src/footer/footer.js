@@ -5,14 +5,14 @@ import "../header/index.html";
 const templateRenderer = template(html);
 
 
-class Main {
+class Footer {
   constructor() {
-    this.main = document.querySelector("#content");
+    this.footer = document.querySelector("footer");
     this.header = document.querySelector("div.container");
   }
 
   render() {
-    const layout = templateRenderer(this.main);
+    const layout = templateRenderer(this.footer);
 
     const container = document.createElement("div");
     container.innerHTML = layout;
@@ -20,4 +20,4 @@ class Main {
   }
 }
 
-export default Main;
+export default Footer;

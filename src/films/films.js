@@ -1,5 +1,6 @@
 import template from "lodash.template";
 import html from "./index.html";
+import "../main/index.html";
 
 
 // Список фильмов
@@ -35,12 +36,14 @@ const templateRenderer = template(html);
 class List {
   constructor() {
 
-    this.films = [];
+    // this.films = [];
+    this.films = filmsList;
+    this.main = document.querySelector("main");
 
-    for (let i = 0; i < 4; i++) {
-      const film = filmsList[i];
-      this.films.push(film);
-    }
+    // for (let i = 0; i < filmsList.length; i++) {
+    //   const film = filmsList[i];
+    //   this.films.push(film);
+    // }
   }
 
   render() {
@@ -68,7 +71,7 @@ class List {
       }
     });
 
-    document.body.appendChild(container);
+    this.main.appendChild(container);
   }
 }
 
