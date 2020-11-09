@@ -1,7 +1,4 @@
-import template from "lodash.template";
 import html from "./index.html";
-
-const templateRenderer = template(html);
 
 
 class Header {
@@ -10,10 +7,8 @@ class Header {
   }
 
   render() {
-    const layout = templateRenderer(this.header);
-
     const container = document.createElement("div");
-    container.innerHTML = layout;
+    container.innerHTML = html;
     document.body.appendChild(container.firstChild);
   }
 }

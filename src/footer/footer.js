@@ -1,9 +1,5 @@
-import template from "lodash.template";
 import html from "./index.html";
 import "../header/index.html";
-
-const templateRenderer = template(html);
-
 
 class Footer {
   constructor() {
@@ -12,10 +8,8 @@ class Footer {
   }
 
   render() {
-    const layout = templateRenderer(this.footer);
-
     const container = document.createElement("div");
-    container.innerHTML = layout;
+    container.innerHTML = html;
     this.header.appendChild(container.firstChild);
   }
 }

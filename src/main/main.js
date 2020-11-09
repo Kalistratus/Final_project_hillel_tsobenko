@@ -1,8 +1,5 @@
-import template from "lodash.template";
 import html from "./index.html";
 import "../header/index.html";
-
-const templateRenderer = template(html);
 
 
 class Main {
@@ -12,10 +9,8 @@ class Main {
   }
 
   render() {
-    const layout = templateRenderer(this.main);
-
     const container = document.createElement("div");
-    container.innerHTML = layout;
+    container.innerHTML = html;
     this.header.appendChild(container.firstChild);
   }
 }
