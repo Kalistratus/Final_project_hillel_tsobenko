@@ -1,15 +1,16 @@
 import html from "./index.html";
 
-class Footer {
+class Container {
   constructor() {
-    this.footer = html;
+    this.container = html;
   }
 
   render() {
     const container = document.createElement("div");
-    container.innerHTML = this.footer;
+    container.innerHTML = this.container;
+
     return container.firstChild;
   }
 }
 
-export default Footer;
+export default Container;

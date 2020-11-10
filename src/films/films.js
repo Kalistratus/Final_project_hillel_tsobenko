@@ -1,24 +1,24 @@
-import template from "lodash.template";
 import html from "./index.html";
-import "../main/index.html";
-import filmsList from "./filmList.json"
+import {renderTemplate} from "../template-utils";
+import films from "./filmList.json";
+import { getHistory } from "../app-history";
 
-const templateRenderer = template(html);
+const history = getHistory();
 
 class List {
   constructor() {
-    this.films = filmsList;
-    this.main = document.querySelector("main");
+    this.films = renderTemplate(html, { films });
   }
 
-  render() {
-    const layout = templateRenderer({
-      films: this.films
-    });
+  onClick(event) {
+    if (event.target.tagName !== "button") return;
 
-    const container = document.createElement("div");
-    container.className = "card_items";
-    container.innerHTML = layout;
+    event.preventDefault();
+    history.push(event.target.href);
+}
+
+  render() {
+    this.films.addEventListener("click", this.onClick.bind(this));
 
     document.addEventListener('click', (event) => {
       switch (event.target.dataset.id) {
@@ -36,7 +36,7 @@ class List {
       }
     });
 
-    this.main.appendChild(container);
+    return this.films;
   }
 }
 

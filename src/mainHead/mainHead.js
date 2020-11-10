@@ -1,15 +1,15 @@
 import html from "./index.html";
 
-class Footer {
+class MainHead {
   constructor() {
-    this.footer = html;
+    this.head = html;
   }
 
   render() {
     const container = document.createElement("div");
-    container.innerHTML = this.footer;
+    container.innerHTML = this.head;
     return container.firstChild;
   }
 }
 
-export default Footer;
+export default MainHead;

@@ -1,15 +1,15 @@
 import html from "./index.html";
 
-
 class Header {
   constructor() {
-    this.header = document.querySelector("header");
+    this.header = html;
   }
 
   render() {
-    const container = document.createElement("div");
-    container.innerHTML = html;
-    document.body.appendChild(container.firstChild);
+    const cont = document.createElement("div");
+    cont.innerHTML = this.header;
+
+    return cont.firstChild;
   }
 }
 
