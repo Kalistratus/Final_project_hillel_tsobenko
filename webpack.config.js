@@ -48,9 +48,13 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: 'src/assets/test.html'
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
           }),
+        // new HtmlWebpackPlugin({
+        //     template: 'src/assets/test.html'
+        //   }),
         new MiniCssExtractPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]

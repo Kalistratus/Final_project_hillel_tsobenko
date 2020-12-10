@@ -2,12 +2,12 @@ import html from "./index.html";
 import {
   renderTemplate
 } from "../template-utils";
-import films from "./filmList.json";
 import {
   getHistory
 } from "../app-history";
 
 const history = getHistory();
+
 
 function parseFilms(json) {
   try {
@@ -18,27 +18,31 @@ function parseFilms(json) {
   }
 }
 
-const filmsArray = localStorage["films"] ? parseFilms(localStorage.getItem("films")) : films;
-localStorage.setItem("films", JSON.stringify(filmsArray));
+const filmsArray = parseFilms(localStorage.getItem("films"));
 
-class List {
+const fullFilmInfo = filmsArray.filter((film) => {
+  return film.id === history.location.pathname.slice(-36);
+});
+
+
+class MoviePage {
   constructor() {
-    this.films = renderTemplate(html, {
-      filmsArray
+    this.film = renderTemplate(html, {
+      fullFilmInfo
     });
   }
 
   onClick(event) {
-    if (event.target.tagName !== "button" || "a") return;
+    if (event.target.tagName !== "button") return;
 
     event.preventDefault();
     history.push(event.target.href);
   }
 
   render() {
-    this.films.addEventListener("click", this.onClick.bind(this));
-    return this.films;
+    this.film.addEventListener("click", this.onClick.bind(this));
+    return this.film;
   }
 }
 
-export default List;
+export default MoviePage;

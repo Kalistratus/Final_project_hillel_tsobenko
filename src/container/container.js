@@ -1,5 +1,4 @@
 import html from "./index.html";
-
 class Container {
   constructor() {
     this.container = html;

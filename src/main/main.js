@@ -1,5 +1,6 @@
 import html from "./index.html";
 
+
 class Main {
   constructor() {
     this.main = html;
