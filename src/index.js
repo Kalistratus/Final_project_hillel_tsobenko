@@ -12,7 +12,7 @@ import MainHead from "./mainhead/mainhead";
 import Footer from "./footer/footer";
 import Modal from "./newFilmModal/newFimModal";
 import MoviePage from "./moviePage/moviePage";
-import ListFiltered from "./filmsFiltered/filmsFiltered"
+import ListFiltered from "./filmsFiltered/filmsFiltered";
 import {
   v4 as uuidv4
 } from 'uuid';
@@ -81,15 +81,17 @@ $('#add-new').on('click', function () {
 });
 
 
+
 // обработка кликов на кнопки
 document.addEventListener('click', (event) => {
-  switch (event.target.dataset.id) {
+  switch (event.target.dataset.name) {
+
     case "edit":
-      if (event.target.dataset.id !== "edit") return;
+      if (event.target.dataset.name !== "edit") return;
       $(modalTag).modal('show');
 
       parseFilms(localStorage.getItem("films")).forEach(element => {
-        if (element.id === event.target.parentElement.parentElement.querySelector("a").href.slice(-36)) {
+        if (element.id === event.target.dataset.id) {
           const inputs = document.querySelectorAll('[data-input="true"]');
 
           for (let i = 0; i < inputs.length; i++) {
@@ -101,14 +103,14 @@ document.addEventListener('click', (event) => {
       break;
 
     case "delete":
-      if (event.target.dataset.id !== "delete") return;
+      if (event.target.dataset.name !== "delete") return;
       const isDeleteFilm = confirm("Удалить этот фильм?");
 
       if (isDeleteFilm) {
         filmsArray = parseFilms(localStorage.getItem("films"));
 
         filmsArray.forEach(element => {
-          if (element.id === event.target.parentElement.parentElement.querySelector("a").href.slice(-36)) {
+          if (element.id === event.target.dataset.id) {
             filmsArray.splice(filmsArray.indexOf(element), 1);
             localStorage.setItem("films", JSON.stringify(filmsArray));
           }
@@ -119,33 +121,35 @@ document.addEventListener('click', (event) => {
       break;
 
     case "like":
-      if (event.target.dataset.id !== "like") return;
+      if (event.target.dataset.name !== "like") return;
       filmsArray = parseFilms(localStorage.getItem("films"));
 
       filmsArray.forEach(element => {
-        if (element.id === history.location.pathname.slice(-36)) {
-          element["like"]++;
+        if (element.id === event.target.dataset.id) {
+          element.like++;
           localStorage.setItem("films", JSON.stringify(filmsArray));
-          event.target.dataset.count = element["like"];
-          event.target.disabled = true;
-          event.target.parentElement.querySelector('[data-id="dislike"]').disabled = true;
+          const like = document.querySelector('button[data-name="like"]');
+          like.dataset.count = element.like;
+          like.disabled = true;
+          document.querySelector('button[data-name="dislike"]').disabled = true;
         }
       });
       break;
 
     case "dislike":
-      if (event.target.dataset.id !== "dislike") return;
+      if (event.target.dataset.name !== "dislike") return;
       filmsArray = parseFilms(localStorage.getItem("films"));
 
       filmsArray.forEach(element => {
-        if (element.id === history.location.pathname.slice(-36)) {
-          if (element["dislike"] === -2) element["dislike"] -= 2;
-          else element["dislike"]--;
+        if (element.id === event.target.dataset.id) {
+          if (element.dislike === -2) element.dislike -= 2;
+          else element.dislike--;
 
           localStorage.setItem("films", JSON.stringify(filmsArray));
-          event.target.dataset.count = element["dislike"];
-          event.target.disabled = true;
-          event.target.parentElement.querySelector('[data-id="like"]').disabled = true;
+          const dislike = document.querySelector('button[data-name="dislike"]');
+          dislike.dataset.count = element.dislike;
+          dislike.disabled = true;
+          document.querySelector('button[data-name="like"]').disabled = true;
         }
       });
       break;
@@ -181,7 +185,9 @@ function renderRoute(path) {
       }
       break;
     default:
-      console.log("404");
+      const img = document.createElement("img");
+      img.src = "https://www.artzstudio.com/wp-content/uploads/2020/05/404-error-not-found-page-lost-1024x788.png";
+      mainTag.appendChild(img);
       break;
   }
 }
@@ -207,7 +213,7 @@ function createNewFilm(url) {
   document.querySelectorAll('[data-input="true"]').forEach((input) => {
     newFilm[input.dataset.id] = input.value
   });
-  newFilm["photo"] = url;
+  newFilm.photo = url;
 
   return newFilm;
 }
@@ -219,9 +225,9 @@ $('#save-film').on('click', () => {
   if (newId) {
     const newFilmHtml = createNewFilm(src);
 
-    newFilmHtml["id"] = newId;
-    newFilmHtml["like"] = 0;
-    newFilmHtml["dislike"] = 0;
+    newFilmHtml.id = newId;
+    newFilmHtml.like = 0;
+    newFilmHtml.dislike = 0;
     filmsArray.push(newFilmHtml);
     localStorage.setItem("films", JSON.stringify(filmsArray));
 
@@ -237,9 +243,9 @@ $('#save-film').on('click', () => {
 
         const newFilmHtml = createNewFilm(src);
 
-        newFilmHtml["id"] = curId;
-        newFilmHtml["like"] = elem.like;
-        newFilmHtml["dislike"] = elem.dislike;
+        newFilmHtml.id = curId;
+        newFilmHtml.like = elem.like;
+        newFilmHtml.dislike = elem.dislike;
         filmsArray.push(newFilmHtml);
         localStorage.setItem("films", JSON.stringify(filmsArray));
 

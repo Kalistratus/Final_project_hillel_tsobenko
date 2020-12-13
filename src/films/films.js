@@ -19,7 +19,7 @@ function parseFilms(json) {
 }
 
 
-const filmsArray = localStorage["films"] ? parseFilms(localStorage.getItem("films")) : films;
+const filmsArray = localStorage.films ? parseFilms(localStorage.getItem("films")) : films;
 localStorage.setItem("films", JSON.stringify(filmsArray));
 
 class List {
