@@ -2,7 +2,6 @@ import html from "./index.html";
 import {
   renderTemplate
 } from "../template-utils";
-import films from "./filmList.json";
 import {
   getHistory
 } from "../app-history";
@@ -19,10 +18,10 @@ function parseFilms(json) {
 }
 
 
-const filmsArray = localStorage["films"] ? parseFilms(localStorage.getItem("films")) : films;
-localStorage.setItem("films", JSON.stringify(filmsArray));
+const filmsArray = localStorage["filmsFiltered"] ? parseFilms(localStorage.getItem("filmsFiltered")) : [];
+localStorage.setItem("filmsFiltered", JSON.stringify(filmsArray));
 
-class List {
+class ListFiltered {
   constructor() {
     this.films = renderTemplate(html, {
       filmsArray
@@ -42,4 +41,4 @@ class List {
   }
 }
 
-export default List;
+export default ListFiltered;

@@ -12,13 +12,14 @@ import MainHead from "./mainhead/mainhead";
 import Footer from "./footer/footer";
 import Modal from "./newFilmModal/newFimModal";
 import MoviePage from "./moviePage/moviePage";
+import ListFiltered from "./filmsFiltered/filmsFiltered"
 import {
   v4 as uuidv4
 } from 'uuid';
 
-// import {
-//   stringify
-// } from "query-string";
+import {
+  stringify, parse
+} from "query-string";
 
 
 function parseFilms(json) {
@@ -43,9 +44,19 @@ const header = new Header();
 containerTag.appendChild(header.render());
 
 //search
-// const searchInput = document.querySelector("#search input");
-// const searchButton = document.querySelector("#search button");
+const searchInput = document.querySelector("#search input");
+const searchButton = document.querySelector("#search button");
 
+searchButton.addEventListener("click", () => {
+  const query = searchInput.value;
+
+  filmsArray = parseFilms(localStorage.getItem("films"));
+  const filmsArrayFiltered = filmsArray.filter((elem) => {
+    if (elem.name.toUpperCase().includes(query.toUpperCase())) return elem;
+  });
+
+  localStorage.setItem("filmsFiltered", JSON.stringify(filmsArrayFiltered));
+})
 
 //main
 const main = new Main();
@@ -68,6 +79,7 @@ $('#add-new').on('click', function () {
   document.querySelectorAll('[data-input="true"]').forEach(elem => elem.value = "");
   return newId = uuidv4();
 });
+
 
 // обработка кликов на кнопки
 document.addEventListener('click', (event) => {
@@ -144,6 +156,8 @@ document.addEventListener('click', (event) => {
 });
 
 
+
+
 function renderRoute(path) {
   switch (path) {
     case "/list":
@@ -155,6 +169,16 @@ function renderRoute(path) {
       mainTag.removeChild(mainTag.firstChild);
       const movie = new MoviePage();
       mainTag.appendChild(movie.render());
+      break;
+    case "/search":
+      if(parseFilms(localStorage.getItem("filmsFiltered")).length === 0) {
+        const div = document.createElement("div");
+        div.innerText = "Поиск не дал результатов... Попробуйте ещё раз.";
+        mainTag.appendChild(div);
+      } else {
+      const listFiltered = new ListFiltered();
+      mainTag.appendChild(listFiltered.render());
+      }
       break;
     default:
       console.log("404");

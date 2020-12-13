@@ -56,7 +56,7 @@ main {
 .card_items {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .btn-edit:hover svg,
 .btn-delete:hover svg,
