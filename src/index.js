@@ -8,7 +8,7 @@ import Container from "./container/container";
 import Header from "./header/header";
 import Main from "./main/main";
 import List from "./films/films";
-import MainHead from "./mainhead/mainhead";
+import MainHead from "./mainHead/mainHead";
 import Footer from "./footer/footer";
 import Modal from "./newFilmModal/newFimModal";
 import MoviePage from "./moviePage/moviePage";
